@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 
-const connectDB = async() => {
+const dbConnection = async() => {
     try {
-        await mongoose.connect(process.env.DB_STRING, {
+        await mongoose.connect(process.env.DB_CONNECTION_STRING, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
@@ -10,8 +11,10 @@ const connectDB = async() => {
         .catch(err => console.error(err))
     } catch (error) {
         console.error(`Error: ${error.message}`)
-        process.exit()
+        throw new Error('Error connecting to DB');
     }
 }
 
-module.exports = connectDB;
+module.exports = {
+    dbConnection
+};
