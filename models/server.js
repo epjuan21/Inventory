@@ -10,6 +10,12 @@ class Server {
         this.port = process.env.PORT;
         this.authPath = '/api/auth';
         this.userPath = '/api/user';
+        this.rolePath = '/api/role';
+        this.areaPath = '/api/area';
+        this.groupPath = '/api/group';
+        this.typePath = '/api/type';
+        this.osPath = '/api/os';
+        this.workstationPath = '/api/workstation';
 
         // Connect to DB
         this.connectDB();
@@ -53,7 +59,12 @@ class Server {
 
         this.app.use(this.authPath, require('../routes/auth'));
         this.app.use(this.userPath, require('../routes/user'));
-
+        this.app.use(this.rolePath, require('../routes/role'));
+        this.app.use(this.areaPath, require('../routes/area'));
+        this.app.use(this.groupPath, require('../routes/group'));
+        this.app.use(this.typePath, require('../routes/type'));
+        this.app.use(this.osPath, require('../routes/os'));
+        this.app.use(this.workstationPath, require('../routes/workstation'));
     }
 
     listen() {

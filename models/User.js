@@ -1,28 +1,33 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
     name: {
         type: String,
         required: [true, "El nombre es requerido"],
+        trim: true,
         unique: [true, "El nombre debe ser único"],
-        minlength: [10, "El nombre debe tener más de 10 caracteres"],
+        minlength: [4, "El nombre debe tener más de 5 caracteres"],
         maxlength: [100, "El nombre debe tener menos de 100 caracteres"]
     },
     email: {
         type: String,
+        unique: [true, "El correo debe ser único"],
+        trim: true,
         required: [true, "El Email es requerido"],
-        minlength: [6, "El email debe tener más de 6 caracteres"],
+        minlength: [7, "El email debe tener más de 6 caracteres"],
         maxlength: [100, "El email debe tener menos de 100 caracteres"]
     },
     password: {
         type: String,
+        trim: true,
         required: [true, "El Password es requerido"],
-        minlength: [6, "El Password debe tener mas de 6 caracteres"],
+        minlength: [7, "El Password debe tener mas de 6 caracteres"],
     },
     image: {
         type: String,
+        default: "https://res.cloudinary.com/jfrvdata/image/upload/v1652546429/Users/userMale.png"
     },
     role: {
         type: String,
@@ -34,12 +39,8 @@ const userSchema = new Schema({
         type: Boolean,
         default: true
     }
-
 },
-    {
-        versionKey: false,
-        timestamps: true
-    });
+    { versionKey: false, timestamps: true });
 
 // Encriptar password antes de guardar
 userSchema.pre('save', async function (next) {
@@ -57,4 +58,4 @@ userSchema.statics.comparePassword = async (password, recievedPassword) => {
     return await bcrypt.compare(password, recievedPassword)
 }
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = model('User', userSchema);
