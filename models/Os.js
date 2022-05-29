@@ -17,6 +17,16 @@ const OsSchema = new Schema({
         minlength: [4, "La versión debe tener más de 4 caracteres"],
         maxlength: [100, "La versión debe tener menos de 100 caracteres"]
     },
+    image: {
+        public_id: {
+            type: String,
+            required: [true, "La imagen es requerida"]
+        },
+        secure_url: {
+            type: String,
+            required: [true, "La imagen es requerida"]
+        }
+    },
     barcode: {
         type: String,
         trim: true,
@@ -32,12 +42,8 @@ const OsSchema = new Schema({
         minlength: [4, "El número de serie debe tener más de 4 caracteres"],
         maxlength: [100, "El número de serie debe tener menos de 100 caracteres"]
     },
-    workstation: {
-        type: String,
-        trim: true,
-        required: [true, "El equipo es requerido"],
-        minlength: [4, "El equipo debe tener más de 4 caracteres"],
-        maxlength: [100, "El equipo debe tener menos de 100 caracteres"]
+    workstation_id: {
+        type: mongoose.Types.ObjectId,
     },
     availability: {
         type: String,

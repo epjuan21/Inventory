@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const { dbConnection } = require('../database/config');
 
 class Server {
@@ -53,6 +54,13 @@ class Server {
 
         // URL Encoded
         this.app.use(express.urlencoded({ extended: false }));
+
+        // File Upload
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: './uploads/',
+            createParentPath: true
+        }));
     }
 
     routes() {
