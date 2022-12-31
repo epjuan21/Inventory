@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const { Schema, model } = mongoose;
 const bcrypt = require('bcrypt');
+
+const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
     name: {
@@ -15,6 +16,7 @@ const userSchema = new Schema({
         type: String,
         unique: [true, "El correo debe ser único"],
         trim: true,
+        lowercase: true,
         required: [true, "El Email es requerido"],
         minlength: [7, "El email debe tener más de 6 caracteres"],
         maxlength: [100, "El email debe tener menos de 100 caracteres"]
@@ -34,6 +36,13 @@ const userSchema = new Schema({
         required: [true, "El rol es requerido"],
         default: 'USER_ROLE',
         enum: ['USER_ROLE', 'ADMIN_ROLE']
+    },
+    tokenUser: {
+        type: String
+    },
+    confirmed: {
+        type: Boolean,
+        default: false
     },
     state: {
         type: Boolean,

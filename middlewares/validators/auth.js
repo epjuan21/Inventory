@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const { emailExist, emailNotExist, isActive, isPasswordCorrect, roleExist } = require('../customUserValidations');
+const { emailExist, emailNotExist, isActive, isPasswordCorrect, roleExist, isConfirmed } = require('../customUserValidations');
 const validateResults = require('../handleValidator');
 
 const validatorRegisterUser = [
@@ -27,7 +27,8 @@ const validatorLoginUser = [
     check('password', 'El Password es requerido').not().isEmpty(),
     isActive,
     isPasswordCorrect,
-    validateResults
+    isConfirmed,
+    validateResults,
 ]
 
 module.exports = {

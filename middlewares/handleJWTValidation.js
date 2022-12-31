@@ -9,16 +9,14 @@ const validateTokenJWT = async (req, res, next) => {
     // Comprobar que el token existe
     if (typeof bearerHeader !== "undefined") {
         // Divide el token en dos partes, el Bearer y el token
-        const bearer = bearerHeader.split(" ");
-        // Obtener el token
-        const bearerToken = bearer[1];
+        const token = bearerHeader.split(" ")[1];
         try {
             // Verificar Token
-            const { decoded, valid, error } = VerifyTokenJWT(bearerToken);
+            const { decoded, valid, error } = VerifyTokenJWT(token);
             // Verificar si el Token es Valido
             if (valid) {
                 // Obtener el Usuario por el ID
-                const user = await User.findById({ _id: decoded.id });
+                const user = await User.findById({ _id: decoded.id }).select("-password -confirmed -tokenUser -createdAt -updatedAt");
                 // Verificar si el Usuario existe
                 if (user) {
                     // Verificar si el usuario esta activo
