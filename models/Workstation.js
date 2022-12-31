@@ -217,6 +217,12 @@ const WorkstationSchema = new Schema({
         maxlength: [100, "La contraseña de anydesk debe tener menos de 100 caracteres"],
         default: "SIN INFORMACIÓN"
     },
+    eventos: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Event"
+        }
+    ]
 
 }
     , { versionKey: false, timestamps: true }
