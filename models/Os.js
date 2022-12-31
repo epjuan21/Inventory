@@ -46,10 +46,9 @@ const OsSchema = new Schema({
         type: mongoose.Types.ObjectId,
     },
     availability: {
-        type: String,
+        type: Boolean,
         required: [true, "La disponibilidad es requerida"],
-        default: "Disponible",
-        enum: ["Disponible", "No Disponible"]
+        default: false
     },
     consecutive: {
         type: Number,
