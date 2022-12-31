@@ -62,6 +62,14 @@ const isAdmin = async (req, res, next) => {
     next();
 }
 
+// Middleware para verificar si el usuario esta confirmado
+const isConfirmed = async (req, res, next) => {
+    const { email } = req.body;
+    const user = await User.findOne({email});
+    if(!user.confirmed) return handleHttpError(res, `El usuario ${user.email} no esta confirmado`, 401);
+    next()
+}
+
 module.exports = {
     emailExist,
     emailNotExist,
@@ -69,5 +77,6 @@ module.exports = {
     isActive,
     isPasswordCorrect,
     roleExist,
-    isAdmin
+    isAdmin,
+    isConfirmed
 }
