@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
 const fileUpload = require('express-fileupload');
 const { dbConnection } = require('../database/config');
 
@@ -54,6 +56,12 @@ class Server {
 
         // URL Encoded
         this.app.use(express.urlencoded({ extended: false }));
+
+        // Helmet
+        this.app.use(helmet());
+
+        // Compression
+        this.app.use(compression());
 
         // File Upload
         this.app.use(fileUpload({
